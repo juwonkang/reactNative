@@ -1,15 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import MainScreen from './screens/MainScreen';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, Text, View } from 'react-native'
+import MainScreen from './screens/MainScreen'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native'
+import LoginScreen from './screens/LoginScreen'
+import app from './screens/firebase'
+import Toast from 'react-native-toast-message'
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <MainScreen />
-    </Provider>
-  );
+    <>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Main"
+              component={MainScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      <Toast />
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -19,4 +42,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
